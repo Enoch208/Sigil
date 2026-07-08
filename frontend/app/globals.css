@@ -1,0 +1,432 @@
+/* globals.css — Sigil design tokens (Outfit + Lexend, dark + amber) plus the
+   reveal / orbit / marquee / hero-ring animation system. */
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  /* Type */
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-desc: var(--font-lexend), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  /* Surfaces — a deliberate 3-step elevation ladder so cards read as objects. */
+  --bg-page: #08080c;
+  --bg-surface: #14141e;
+  --bg-elevated: #1e1e2a;
+  --bg-contrast: #f5f6fb;
+
+  /* Text */
+  --fg-primary: #f5f6fb;
+  --fg-body: #c3c4cf;
+  --fg-muted: #8a8b97;
+  --fg-hint: rgba(255, 255, 255, 0.42);
+
+  /* Hairlines */
+  --border-hairline: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Amber accent (brand). Amber fills carry dark ink text. */
+  --accent-primary: #f5a524;
+  --accent-bg: #241b0a;
+  --accent-ink: #0a0a10;
+
+  /* Verified / positive */
+  --accent-positive: #34d399;
+  --accent-positive-bg: #0e2018;
+
+  /* Contradicted / error */
+  --accent-negative: #f87171;
+  --accent-negative-bg: #241012;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 9999px;
+
+  /* Dark-native elevation: a bright top edge + faint inner border + tight
+     contact shadow + wide ambient. The "shadow" that reads on black. */
+  --shadow-card:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 16px 34px -14px rgba(0, 0, 0, 0.72),
+    0 44px 70px -34px rgba(0, 0, 0, 0.88);
+  /* Lifted amber CTA: sharp ring + bright top highlight + amber bloom. */
+  --shadow-cta:
+    0 0 0 1px #b9791a,
+    inset 0 1.4px 1px rgba(255, 255, 255, 0.38),
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 10px 28px -8px rgba(245, 165, 36, 0.5);
+  --shadow-cta-neutral: 0 0 0 1px var(--border-strong), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  --shadow-dialog: 0 16px 54px rgba(0, 0, 0, 0.6);
+  --shadow-inset: inset 0 2px 6px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  --bg-inset: #0a0a10;
+
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--border-hairline);
+}
+
+html {
+  background: var(--bg-page);
+  color: var(--fg-body);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Firefox scrollbar (webkit engines use the ::-webkit-scrollbar rules below). */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--fg-body);
+  min-height: 100dvh;
+  font-feature-settings: "cv03", "cv04", "cv09", "cv11";
+}
+
+/* Fine film grain — premium tactility + kills gradient banding. Topmost, inert. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Soft amber spotlight behind a section's decor — the dark-native "light
+   source" that gives the page depth. */
+.glow-amber {
+  position: relative;
+}
+.glow-amber::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(1100px 620px at 50% -10%, rgba(245, 165, 36, 0.09), transparent 58%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--fg-primary);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+::selection {
+  background: rgba(245, 165, 36, 0.22);
+  color: var(--fg-primary);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-hint);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--accent-primary);
+  background-clip: padding-box;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+a {
+  text-underline-offset: 3px;
+}
+
+button:not(:disabled),
+[role="button"],
+label[for],
+summary,
+a[href] {
+  cursor: pointer;
+}
+
+:disabled,
+[data-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  body::after {
+    display: none;
+  }
+}
+
+/* Small uppercase eyebrow label. */
+.label-pill {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+/* Section body copy: Lexend at weight 350. */
+.font-desc {
+  font-family: var(--font-desc);
+  font-weight: 350;
+}
+
+/* ---- Lenis smooth scroll ---- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ---- Marquee ticker ---- */
+@keyframes marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+.animate-marquee-up {
+  animation: marquee-up var(--marquee-duration, 30s) linear infinite;
+}
+
+/* ---- Orbiting icon cards on concentric tracks (hero + footer) ---- */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbit-spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+.orbit-field {
+  position: absolute;
+  top: var(--orbit-cy, 50%);
+  width: 0;
+  height: 0;
+}
+.orbit-field-left {
+  left: var(--orbit-cx);
+}
+.orbit-field-right {
+  right: var(--orbit-cx);
+}
+.orbit-spin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  animation: orbit-spin var(--orbit-dur, 150s) linear infinite;
+  will-change: transform;
+}
+.orbit-field-right .orbit-spin {
+  animation-name: orbit-spin-rev;
+}
+.orbit-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: rotate(calc(var(--i) * var(--orbit-step, 30deg))) translateY(calc(var(--orbit-r) * -1));
+}
+.orbit-card {
+  position: absolute;
+  left: calc(var(--orbit-card, 76px) / -2);
+  top: calc(var(--orbit-card, 76px) / -2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--orbit-card, 76px);
+  height: var(--orbit-card, 76px);
+  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-card);
+  color: var(--fg-muted);
+}
+.hero-orbit-field {
+  --orbit-cy: 50%;
+  --orbit-cx: calc(50% - 1460px);
+  --orbit-r: 895px;
+  --orbit-step: 30deg;
+  --orbit-card: 76px;
+  --orbit-dur: 150s;
+}
+
+/* Status dot ping (live cards) */
+@keyframes status-ping {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+.status-ping {
+  animation: status-ping 2050ms linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin,
+  .status-ping {
+    animation: none;
+  }
+}
+
+/* ---- Scroll reveal: staggered per-element ---- */
+:root {
+  --ease-appear: linear(
+    0, 0.0157, 0.0555, 0.1106, 0.1747, 0.243, 0.3122, 0.3799, 0.4447, 0.5055, 0.5618, 0.6133, 0.6601,
+    0.7022, 0.7399, 0.7734, 0.8031, 0.8292, 0.8522, 0.8724, 0.8899, 0.9052, 0.9185, 0.93, 0.94, 0.9486,
+    0.956, 0.9624, 0.9679, 0.9726, 0.9767, 0.9801, 0.9831, 0.9856, 0.9878, 0.9896, 0.9912, 0.9925,
+    0.9937, 0.9946, 0.9955, 0.9961, 0.9967, 0.9972, 0.9977, 0.998, 0.9983, 0.9986, 0.9988, 1
+  );
+  --ease-blur-appear: linear(
+    0, 0.024, 0.0823, 0.1594, 0.2448, 0.3315, 0.4152, 0.4934, 0.5646, 0.6282, 0.6844, 0.7334, 0.7758,
+    0.8122, 0.8432, 0.8694, 0.8916, 0.9102, 0.9258, 0.9388, 0.9496, 0.9586, 0.966, 0.9722, 0.9772,
+    0.9814, 0.9848, 0.9876, 0.9899, 0.9918, 0.9933, 0.9946, 0.9956, 0.9964, 0.9971, 0.9977, 0.9981,
+    0.9985, 0.9988, 1
+  );
+}
+.reveal > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s var(--ease-blur-appear),
+    transform 0.5s var(--ease-appear);
+}
+.reveal > *.appeared {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-load.is-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-load > *:nth-child(1) {
+  transition-delay: 500ms;
+}
+.reveal-load > *:nth-child(2) {
+  transition-delay: 550ms;
+}
+.reveal-load > *:nth-child(3) {
+  transition-delay: 600ms;
+}
+.reveal-load > *:nth-child(4) {
+  transition-delay: 650ms;
+}
+.reveal-load > *:nth-child(5) {
+  transition-delay: 750ms;
+}
+.reveal-load > *:nth-child(n + 6) {
+  transition-delay: 900ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- Hero ring arcs: filled circles (elevated ring edge over page fill) ---- */
+.hero-ring {
+  position: absolute;
+  border-radius: 50%;
+  background: #16161f;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%);
+}
+.hero-ring-bg {
+  position: absolute;
+  inset: var(--ring-pad, 10px);
+  border-radius: 50%;
+  background: var(--bg-page);
+}
+.hero-deco .hero-ring,
+.hero-deco .orbit-field {
+  opacity: 0;
+  transition:
+    opacity 0.5s var(--ease-appear),
+    transform 0.5s var(--ease-appear);
+}
+.hero-deco .hero-ring {
+  transform: translateY(-50%) translateX(var(--ring-slide, -50px));
+}
+.hero-deco .orbit-field {
+  transform: translateX(var(--ring-slide, -50px));
+}
+.hero-deco.is-in .hero-ring {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+.hero-deco.is-in .orbit-field {
+  opacity: 1;
+  transform: none;
+}
