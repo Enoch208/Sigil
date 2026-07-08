@@ -102,6 +102,24 @@ describe("parseLoopMd — real-world messiness (TC-PARSE-04,06,12,13)", () => {
     expect(lines[0].testId).toBe("TC-REAL-01");
   });
 
+  it("does not extract anchors from the English words 'run'/'commit' in prose (no false anchors)", () => {
+    const { lines } = parseLoopMd(
+      "| 28 | Re-run test run --wait after Render deploy finished | PASS 5/5 — fix verified |",
+    );
+    expect(lines).toHaveLength(1);
+    expect(lines[0].runId).toBeUndefined();
+    expect(lines[0].commitSha).toBeUndefined();
+    expect(lines[0].parseFlags).toContain("no-anchors");
+  });
+
+  it("extracts anchors only from the bracketed anchor group", () => {
+    const { lines } = parseLoopMd(
+      'we then run the suite again → PASS banked [commit abc1234 · run r_9d2kq]',
+    );
+    expect(lines[0].commitSha).toBe("abc1234");
+    expect(lines[0].runId).toBe("r_9d2kq");
+  });
+
   it("degrades a loose per-sprint line to partial data without crashing (TC-PARSE-13)", () => {
     const { lines } = parseLoopMd("Sprint 3 — TC-KW-12 covered the manifest path");
     expect(lines).toHaveLength(1);

@@ -9,6 +9,7 @@ const DESC_SMART = /[“]([^”]*)[”]/;
 const COMMIT = /\bcommit\s+([0-9a-f]{6,40})\b/i;
 const RUN = /\brun\s+([A-Za-z0-9_-]+)/i;
 const BANKED = /\bbanked\b/i;
+const ANCHOR_GROUP = /\[[^\]]*\]/g;
 const FENCE = /^```/;
 
 /** A line is worth parsing if it carries any loop-line signal. */
@@ -53,8 +54,12 @@ function parseLine(raw: string, sourceLineNo: number): LoopLine {
   if (!claimedVerdict) flags.push("no-verdict");
 
   const banked = BANKED.test(raw) || undefined;
-  const commitSha = raw.match(COMMIT)?.[1].toLowerCase();
-  const runId = raw.match(RUN)?.[1];
+  // Anchors live only inside the trailing [commit … · run …] bracket group.
+  // Restricting extraction to brackets prevents the English words "commit"/"run"
+  // in prose logs from being misread as claims (which would fabricate contradictions).
+  const anchorText = (raw.match(ANCHOR_GROUP) ?? []).join(" ");
+  const commitSha = anchorText.match(COMMIT)?.[1].toLowerCase();
+  const runId = anchorText.match(RUN)?.[1];
   if (!commitSha && !runId) flags.push("no-anchors");
 
   return {
