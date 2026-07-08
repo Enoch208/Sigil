@@ -7,6 +7,7 @@ export { audit, type AuditInput, type AuditResult } from "./audit";
 export { buildTimeline } from "./timeline";
 export { aggregateSeason } from "./season";
 export { getMethodology, type MethodologyDoc } from "./methodology";
+export { GitHubSource, type GitHubRepoRef } from "./ingest/github";
 export {
   renderBadge,
   loopBadge,
