@@ -204,7 +204,11 @@ export interface SeasonEntry {
   iterations: number;
   banked: number;
   contradicted: number;
-  status: "verified" | "audited" | "contested";
+  /**
+   * `narrative` = nothing machine-checkable (prose log) — a neutral fact, not a
+   * failure. `verified`/`audited`/`contested` apply only to machine-checkable logs.
+   */
+  status: "verified" | "audited" | "contested" | "narrative";
 }
 
 /** A clustered failure class across the season (PRD §3.6). */

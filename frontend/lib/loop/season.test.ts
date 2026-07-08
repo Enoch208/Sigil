@@ -50,6 +50,14 @@ describe("aggregateSeason — index rows", () => {
     expect(summary.entries[1].status).toBe("contested");
   });
 
+  it("labels a zero-coverage narrative log neutrally, not as audited or contested", () => {
+    const prose = project("x", "prose", [v("unverifiable"), v("unverifiable")]);
+    const [entry] = aggregateSeason([prose]).entries;
+    expect(entry.coverage).toBe(0);
+    expect(entry.contradicted).toBe(0);
+    expect(entry.status).toBe("narrative");
+  });
+
   it("orders ties deterministically by handle/project (TC-PUB-09)", () => {
     const p1 = project("zeta", "x", [v("verified")]);
     const p2 = project("alpha", "x", [v("verified")]);

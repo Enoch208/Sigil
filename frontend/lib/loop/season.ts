@@ -6,7 +6,12 @@ import type {
   SeasonSummary,
 } from "./types";
 
-function statusOf(score: number, contradicted: number): SeasonEntry["status"] {
+function statusOf(
+  score: number,
+  contradicted: number,
+  checkable: number,
+): SeasonEntry["status"] {
+  if (checkable === 0) return "narrative"; // nothing machine-checkable — neutral, not a failure
   if (contradicted > 0) return "contested";
   if (score >= 95) return "verified";
   return "audited";
@@ -28,7 +33,11 @@ export function aggregateSeason(projects: SeasonProject[]): SeasonSummary {
       iterations: p.timeline.iterations,
       banked: p.timeline.banked,
       contradicted: p.report.score.contradicted,
-      status: statusOf(p.report.score.score, p.report.score.contradicted),
+      status: statusOf(
+        p.report.score.score,
+        p.report.score.contradicted,
+        p.report.score.checkable,
+      ),
     }))
     .sort(
       (a, b) =>
