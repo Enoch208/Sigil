@@ -1,0 +1,13 @@
+# Design/reference sources — copy from, never commit
+ref.json
+loopscope-prd-v2*.md
+
+# Dependencies (root-level tooling)
+node_modules/
+
+# Internal — strategy / planning, never commit
+/CLAUDE.md
+docs/superpowers/
+
+# OS
+.DS_Store
