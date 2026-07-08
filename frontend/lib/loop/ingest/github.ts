@@ -69,12 +69,21 @@ export class GitHubSource implements GitSource, LoopSource {
 
   async commits(): Promise<Commit[]> {
     const { owner, repo, ref } = this.repo;
-    const url = new URL(`https://api.github.com/repos/${owner}/${repo}/commits`);
-    url.searchParams.set("per_page", "100");
-    if (ref) url.searchParams.set("sha", ref);
-    const res = await fetch(url, { headers: this.headers() });
-    if (!res.ok) throw new Error(`GitHub commits ${res.status} for ${owner}/${repo}`);
-    return mapGitHubCommits(await res.json());
+    const perPage = 100;
+    const maxPages = 20; // up to 2000 commits — generous; guards against runaway repos
+    const all: Commit[] = [];
+    for (let page = 1; page <= maxPages; page++) {
+      const url = new URL(`https://api.github.com/repos/${owner}/${repo}/commits`);
+      url.searchParams.set("per_page", String(perPage));
+      url.searchParams.set("page", String(page));
+      if (ref) url.searchParams.set("sha", ref);
+      const res = await fetch(url, { headers: this.headers() });
+      if (!res.ok) throw new Error(`GitHub commits ${res.status} for ${owner}/${repo}`);
+      const json = await res.json();
+      all.push(...mapGitHubCommits(json));
+      if (!Array.isArray(json) || json.length < perPage) break;
+    }
+    return all;
   }
 
   async loopMarkdown(): Promise<string> {

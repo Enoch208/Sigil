@@ -84,6 +84,22 @@ describe("GitHubSource (network wiring, fetch stubbed)", () => {
     expect(await new GitHubSource({ owner: "o", repo: "r" }).loopMarkdown()).toBe("");
   });
 
+  it("paginates commits across pages until a short page ends it", async () => {
+    const mk = (n: number, start: number) =>
+      Array.from({ length: n }, (_, i) => ({
+        sha: `sha${start + i}`,
+        commit: { message: "m", committer: { date: "2024-01-01T00:00:00Z" } },
+      }));
+    vi.stubGlobal("fetch", async (url: string | URL) => {
+      const page = Number(new URL(url.toString()).searchParams.get("page") ?? "1");
+      if (page === 1) return new Response(JSON.stringify(mk(100, 0)), { status: 200 });
+      if (page === 2) return new Response(JSON.stringify(mk(20, 100)), { status: 200 });
+      return new Response(JSON.stringify([]), { status: 200 });
+    });
+    const commits = await new GitHubSource({ owner: "o", repo: "r" }).commits();
+    expect(commits).toHaveLength(120);
+  });
+
   it("throws with the status on a non-ok commits response", async () => {
     vi.stubGlobal("fetch", async () => new Response("boom", { status: 500 }));
     await expect(new GitHubSource({ owner: "o", repo: "r" }).commits()).rejects.toThrow("500");
