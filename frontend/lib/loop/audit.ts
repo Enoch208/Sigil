@@ -7,6 +7,8 @@ export interface AuditInput {
   loopMarkdown: string;
   commits: Commit[];
   runs: Run[];
+  /** Which sources were ingested; an unavailable source stays neutral, not contradicted. */
+  available?: { commits?: boolean; runs?: boolean };
 }
 
 export interface AuditResult {
@@ -15,9 +17,9 @@ export interface AuditResult {
 }
 
 /** Run the full pipeline for one project: parse LOOP.md, verify, derive timeline. */
-export function audit({ loopMarkdown, commits, runs }: AuditInput): AuditResult {
+export function audit({ loopMarkdown, commits, runs, available }: AuditInput): AuditResult {
   const { lines } = parseLoopMd(loopMarkdown);
-  const report = verifyLoop({ lines, commits, runs });
+  const report = verifyLoop({ lines, commits, runs, available });
   const timeline = buildTimeline(report, { commits, runs });
   return { report, timeline };
 }
