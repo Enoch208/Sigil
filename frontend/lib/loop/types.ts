@@ -139,6 +139,12 @@ export interface VerifyInput {
   lines: LoopLine[];
   commits: Commit[];
   runs: Run[];
+  /**
+   * Which evidence sources were actually ingested. A source marked unavailable
+   * makes its anchored checks skip (lines relying solely on it become
+   * unverifiable, never contradicted). Both default to available.
+   */
+  available?: { commits?: boolean; runs?: boolean };
 }
 
 /** One point on the replay rail — a single loop line, narrated by its raw text. */

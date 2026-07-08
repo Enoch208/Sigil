@@ -124,6 +124,42 @@ describe("verifyLoop — timestamp coherence (TC-VERIFY-06)", () => {
   });
 });
 
+describe("verifyLoop — partial source availability", () => {
+  it("marks a run-anchored line unverifiable (not contradicted) when runs were not ingested", () => {
+    const lines = [line({ testId: "TC-A-01", claimedVerdict: "pass", runId: "r_1" })];
+    const { verdicts } = verifyLoop({
+      lines,
+      commits: [],
+      runs: [],
+      available: { commits: true, runs: false },
+    });
+    expect(verdicts[0].verdict).toBe("unverifiable");
+  });
+
+  it("still verifies a commit-anchored line when only runs are unavailable", () => {
+    const lines = [line({ iter: 1, commitSha: "c1", claimedVerdict: "pass" })];
+    const commits: Commit[] = [{ sha: "c1", timestamp: 100 }];
+    const { verdicts } = verifyLoop({
+      lines,
+      commits,
+      runs: [],
+      available: { commits: true, runs: false },
+    });
+    expect(verdicts[0].verdict).toBe("verified");
+  });
+
+  it("marks a commit-anchored line unverifiable when commits were not ingested", () => {
+    const lines = [line({ iter: 1, commitSha: "c1", claimedVerdict: "pass" })];
+    const { verdicts } = verifyLoop({
+      lines,
+      commits: [],
+      runs: [],
+      available: { commits: false, runs: true },
+    });
+    expect(verdicts[0].verdict).toBe("unverifiable");
+  });
+});
+
 describe("verifyLoop — banked-pass confirmation (TC-VERIFY-07)", () => {
   it("contradicts a banked PASS that a later run for the same test refutes", () => {
     const lines = [

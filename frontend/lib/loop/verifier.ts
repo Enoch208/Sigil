@@ -38,12 +38,20 @@ function verifyLine(
   runById: Map<string, Run>,
   runsByTest: Map<string, Run[]>,
   order: OrderState,
+  available: { commits: boolean; runs: boolean },
 ): LineVerdict {
   const checks: CheckResult[] = [];
   const reasons: string[] = [];
 
-  if (!line.commitSha && !line.runId) {
-    reasons.push("No machine-checkable anchors (no commit SHA or run ID).");
+  const checkableSha = Boolean(line.commitSha) && available.commits;
+  const checkableRun = Boolean(line.runId) && available.runs;
+
+  if (!checkableSha && !checkableRun) {
+    reasons.push(
+      line.commitSha || line.runId
+        ? "Anchored, but the referenced source was not ingested."
+        : "No machine-checkable anchors (no commit SHA or run ID).",
+    );
     return { line, verdict: "unverifiable", checks, reasons };
   }
 
@@ -51,8 +59,8 @@ function verifyLine(
   let mismatch = false;
 
   let commit: Commit | undefined;
-  if (line.commitSha) {
-    commit = commitBySha.get(line.commitSha);
+  if (checkableSha) {
+    commit = commitBySha.get(line.commitSha!);
     if (!commit) {
       checks.push({ check: "sha-exists", status: "fail", detail: `commit ${line.commitSha} not found in git history` });
       reasons.push(`Claimed commit ${line.commitSha} does not exist.`);
@@ -71,8 +79,8 @@ function verifyLine(
   }
 
   let run: Run | undefined;
-  if (line.runId) {
-    run = runById.get(line.runId);
+  if (checkableRun) {
+    run = runById.get(line.runId!);
     if (!run) {
       checks.push({ check: "run-exists", status: "fail", detail: `run ${line.runId} not found` });
       reasons.push(`Claimed run ${line.runId} does not exist.`);
@@ -147,7 +155,11 @@ function latestFailBefore(runs: Run[] | undefined, before: number): number | und
 }
 
 /** Cross-check every parsed line against git commits and run history. */
-export function verifyLoop({ lines, commits, runs }: VerifyInput): LoopReport {
+export function verifyLoop({ lines, commits, runs, available }: VerifyInput): LoopReport {
+  const availability = {
+    commits: available?.commits ?? true,
+    runs: available?.runs ?? true,
+  };
   const commitBySha = new Map(commits.map((c) => [c.sha, c]));
   const runById = new Map(runs.map((r) => [r.id, r]));
   const runsByTest = new Map<string, Run[]>();
@@ -161,7 +173,7 @@ export function verifyLoop({ lines, commits, runs }: VerifyInput): LoopReport {
 
   const order: OrderState = { maxCommitTs: Number.NEGATIVE_INFINITY };
   const verdicts = lines.map((line) =>
-    verifyLine(line, commitBySha, runById, runsByTest, order),
+    verifyLine(line, commitBySha, runById, runsByTest, order, availability),
   );
 
   return { verdicts, score: scoreLoop(verdicts) };
