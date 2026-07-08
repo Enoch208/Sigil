@@ -34,7 +34,7 @@ interface OrderState {
 
 function verifyLine(
   line: LoopLine,
-  commitBySha: Map<string, Commit>,
+  findCommit: (sha: string) => Commit | undefined,
   runById: Map<string, Run>,
   runsByTest: Map<string, Run[]>,
   order: OrderState,
@@ -60,7 +60,7 @@ function verifyLine(
 
   let commit: Commit | undefined;
   if (checkableSha) {
-    commit = commitBySha.get(line.commitSha!);
+    commit = findCommit(line.commitSha!);
     if (!commit) {
       checks.push({ check: "sha-exists", status: "fail", detail: `commit ${line.commitSha} not found in git history` });
       reasons.push(`Claimed commit ${line.commitSha} does not exist.`);
@@ -161,6 +161,11 @@ export function verifyLoop({ lines, commits, runs, available }: VerifyInput): Lo
     runs: available?.runs ?? true,
   };
   const commitBySha = new Map(commits.map((c) => [c.sha, c]));
+  // Real LOOP.md lines carry short (7-char) SHAs; the GitHub API returns full
+  // (40-char) SHAs. Match exact first, then by prefix in either direction.
+  const findCommit = (sha: string): Commit | undefined =>
+    commitBySha.get(sha) ??
+    commits.find((c) => c.sha.startsWith(sha) || sha.startsWith(c.sha));
   const runById = new Map(runs.map((r) => [r.id, r]));
   const runsByTest = new Map<string, Run[]>();
   for (const r of runs) {
@@ -173,7 +178,7 @@ export function verifyLoop({ lines, commits, runs, available }: VerifyInput): Lo
 
   const order: OrderState = { maxCommitTs: Number.NEGATIVE_INFINITY };
   const verdicts = lines.map((line) =>
-    verifyLine(line, commitBySha, runById, runsByTest, order, availability),
+    verifyLine(line, findCommit, runById, runsByTest, order, availability),
   );
 
   return { verdicts, score: scoreLoop(verdicts) };

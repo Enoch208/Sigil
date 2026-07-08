@@ -124,6 +124,27 @@ describe("verifyLoop — timestamp coherence (TC-VERIFY-06)", () => {
   });
 });
 
+describe("verifyLoop — short/full SHA matching (real LOOP.md vs GitHub API)", () => {
+  it("matches a 7-char LOOP.md SHA against a full 40-char git SHA", () => {
+    const lines = [line({ iter: 1, commitSha: "ab3f2e1", claimedVerdict: "pass" })];
+    const commits: Commit[] = [
+      { sha: "ab3f2e1c0ffee1234567890abcdef1234567890ab", timestamp: 1000 },
+    ];
+    const { verdicts } = verifyLoop({ lines, commits, runs: [] });
+    expect(verdicts[0].verdict).toBe("verified");
+    expect(checkStatus(verdicts[0].checks, "sha-exists")).toBe("pass");
+  });
+
+  it("still contradicts a short SHA that prefixes nothing in history", () => {
+    const lines = [line({ iter: 1, commitSha: "deadbee", claimedVerdict: "pass" })];
+    const commits: Commit[] = [
+      { sha: "ab3f2e1c0ffee1234567890abcdef1234567890ab", timestamp: 1000 },
+    ];
+    const { verdicts } = verifyLoop({ lines, commits, runs: [] });
+    expect(verdicts[0].verdict).toBe("contradicted");
+  });
+});
+
 describe("verifyLoop — partial source availability", () => {
   it("marks a run-anchored line unverifiable (not contradicted) when runs were not ingested", () => {
     const lines = [line({ testId: "TC-A-01", claimedVerdict: "pass", runId: "r_1" })];
