@@ -1,0 +1,35 @@
+name: Nightly regression
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # 06:00 UTC daily
+  workflow_dispatch:
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run test
+      - run: npm run self-audit
+      # Smoke the live deployment (once LIVE_URL is set as a repo variable).
+      - name: Smoke live endpoints
+        if: ${{ vars.LIVE_URL != '' }}
+        working-directory: .
+        run: |
+          set -euo pipefail
+          curl -fsS "${{ vars.LIVE_URL }}/api/health" | grep -q '"status":"ok"'
+          curl -fsS -o /dev/null "${{ vars.LIVE_URL }}/api/l/loopscope/sigil/badge.svg"
+          curl -fsS -o /dev/null "${{ vars.LIVE_URL }}/api/season"
+          echo "live smoke passed against ${{ vars.LIVE_URL }}"
