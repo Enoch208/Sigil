@@ -40,8 +40,9 @@ The constants above live in `frontend/lib/loop/scoring.ts`; the published method
 
 ## Verification
 
-- **92 behavior tests** (Vitest) across the pure logic layer — parser, verifier, scoring, timeline, badge, season, ingestion, API routes.
-- **Every-push CI** (`.github/workflows/ci.yml`): lint → typecheck → tests → **self-audit gate**.
+- **96 unit tests** (Vitest) across the pure logic layer — parser, verifier, scoring, timeline, badge, season, ingestion, API routes.
+- **57 TestSprite behavior tests** (`testsprite/`) run against the **live deployment** — `testsprite test run --all` → 57/57 passed. Backend runs bill 0 credits, so the live suite gates every deploy.
+- **Every-push CI** (`.github/workflows/ci.yml`): lint → typecheck → tests → **self-audit gate**; nightly regression + live smoke.
 - Behavior-first protocol: no implementation before a failing test. Every `LOOP.md` line carries a commit SHA so the log is self-proving.
 
 ## Quickstart

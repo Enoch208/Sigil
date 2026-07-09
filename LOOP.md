@@ -38,7 +38,7 @@ Behavior-first protocol, no exceptions: plan → write a failing test (expected 
 
 ## Live verification (TestSprite, against the deployed app at commit 49b830c)
 
-Each line below is a real TestSprite run against `https://sigil-umber.vercel.app`, verifiable in the TestSprite dashboard by its run ID. Backend runs bill at 0 credits, so the live suite gates every deploy.
+**57 TestSprite backend tests are green against the deployed app** (`https://sigil-umber.vercel.app`) — full suite in [`testsprite/`](./testsprite/); `testsprite test run --all` → 57/57 green, zero red. Backend runs bill 0 credits, so the live suite gates every deploy. Six representative iterations are banked below with their run IDs, each verifiable in the TestSprite dashboard.
 
 [maker=claude-code] [iter=15] TC-LIVE-01 "health probe returns ok with a deployed commit" → BLOCKED (base url undefined) → hardcoded base url → PASS banked [commit 49b830c · run fa460787-7b7b-41e7-83b2-54091fb24bbf]
 
