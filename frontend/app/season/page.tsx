@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { audit, aggregateSeason } from "@/lib/loop";
 import type { SeasonEntry } from "@/lib/loop";
 import { listProjects } from "@/lib/loop/fixtures/registry";
@@ -61,7 +62,7 @@ export default async function SeasonPage() {
           {summary.entries.map((e) => {
             const s = STATUS[e.status];
             return (
-              <a
+              <Link
                 key={`${e.handle}/${e.project}`}
                 href={`/l/${e.handle}/${e.project}`}
                 className="grid grid-cols-[40px_1fr_180px_120px_90px] items-center gap-4 border-b border-hairline px-6 py-4 transition-colors last:border-b-0 hover:bg-elevated max-md:grid-cols-[32px_1fr_90px]"
@@ -82,7 +83,7 @@ export default async function SeasonPage() {
                 </span>
                 <span className="font-mono text-[13px] tabular-nums text-fg-body max-md:hidden">{e.coverage}%</span>
                 <span className={`text-right font-display text-fluid-lg font-semibold tabular-nums ${s.text}`}>{e.score}</span>
-              </a>
+              </Link>
             );
           })}
         </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { audit, grade } from "@/lib/loop";
 import type { Verdict } from "@/lib/loop";
@@ -51,9 +52,9 @@ export default async function LoopPage({
       <main className="mx-auto max-w-[920px] px-6 py-14 max-md:py-9">
         {/* header */}
         <div className="flex items-center justify-between gap-4">
-          <a href="/season" className="font-mono text-[13px] text-fg-muted transition-colors hover:text-fg-body">
+          <Link href="/season" className="font-mono text-[13px] text-fg-muted transition-colors hover:text-fg-body">
             ← Season Index
-          </a>
+          </Link>
           <span className={`rounded-pill border px-3 py-1 font-desc text-[12px] font-medium ${st.cls}`}>
             {st.label}
           </span>
@@ -140,7 +141,7 @@ export default async function LoopPage({
 
         <div className="mt-8 flex items-center justify-between font-desc text-[13px] text-fg-muted">
           <a href="/api/methodology" className="transition-colors hover:text-accent">How the score is computed →</a>
-          <a href="/season" className="transition-colors hover:text-accent">Season Index →</a>
+          <Link href="/season" className="transition-colors hover:text-accent">Season Index →</Link>
         </div>
       </main>
     </div>
