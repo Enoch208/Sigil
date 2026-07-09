@@ -11,3 +11,6 @@ docs/superpowers/
 
 # OS
 .DS_Store
+
+# Local coding-agent skills (installed by tooling)
+.claude/
