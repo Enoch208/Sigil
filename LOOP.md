@@ -58,6 +58,12 @@ Behavior-first protocol, no exceptions: plan → write a failing test (expected 
 
 [maker=claude-code] [iter=22] TC-VERIFY-14 "run-verify LOOP.md against TestSprite through the verifier (6/6 run-exists + run-verdict)" → PASS banked [commit c78bb83]
 
+## Distribution — the Sigil GitHub Action (git-verified)
+
+[maker=claude-code] [iter=23] TC-ACTION-01 "self-contained scorer mirrors the engine (100 on this log, drops to 70 on a tampered SHA)" → PASS banked [commit 9319daa]
+
+[maker=claude-code] [iter=24] TC-ACTION-02 "composite action gates a PR on Loop Integrity Score" → PASS banked [commit 52123a9]
+
 ## Banked coverage
 
 83 behavior tests bank green across the pure logic layer (parser 12, verifier 13, scoring 7, timeline 6, badge 9, season 8, audit 2, engine 2, methodology 4, registry 4, ingestion 9, API routes 7). Run `cd frontend && npm run test`.

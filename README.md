@@ -199,6 +199,21 @@ A few decisions I'm proud of, and the bugs that taught me something:
 
 Try them live: [`/api/season`](https://sigil-umber.vercel.app/api/season) · [verified badge](https://sigil-umber.vercel.app/api/l/loopscope/sigil/badge.svg) · [contested badge (red)](https://sigil-umber.vercel.app/api/l/loopscope/contested/badge.svg) · [`/api/health`](https://sigil-umber.vercel.app/api/health).
 
+## Use it in CI (GitHub Action)
+
+Gate any repo's PRs on its Loop Integrity Score — the same engine, self-contained, no install:
+
+```yaml
+- uses: actions/checkout@v4
+  with: { fetch-depth: 0 }        # full history so SHAs resolve
+- uses: Enoch208/Sigil@main
+  with:
+    loop-file: LOOP.md
+    threshold: 95                  # fail the check below this, or on any contradicted line
+```
+
+It parses the repo's `LOOP.md`, cross-checks each line against git history, writes the score to the job summary, exposes `score` / `contradicted` outputs, and fails the check on a contradiction. Verified locally: **100** on this repo's own log, **exit 1** on a tampered SHA.
+
 ## Tech stack
 
 - **App:** Next.js 16 (App Router, Turbopack), React 19, TypeScript (strict), Tailwind CSS v4.
