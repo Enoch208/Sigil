@@ -5,7 +5,7 @@ import type { Verdict } from "@/lib/loop";
 import { getProjectSources } from "@/lib/loop/fixtures/registry";
 import { DashboardSidebar } from "@/components/app/dashboard-sidebar";
 
-const CARD = "rounded-2xl border border-white/[0.06] bg-[#12141C] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]";
+const CARD = "rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]";
 
 const VERDICT: Record<Verdict, { dot: string; text: string; label: string }> = {
   verified: { dot: "bg-[#5BC295]", text: "text-[#5CC79E]", label: "verified" },
@@ -79,7 +79,7 @@ export default async function LoopPage({
           </div>
           <div className="flex-1">
             <div className="flex items-baseline gap-3">
-              <span className="font-display text-[24px] font-semibold tracking-tight text-[#E7AC55]">{grade(s.score)}</span>
+              <span className={`font-display text-[24px] font-semibold tracking-tight ${s.contradicted > 0 ? "text-[#DB9090]" : s.score >= 95 ? "text-[#5CC79E]" : "text-[#F4F5F7]"}`}>{grade(s.score)}</span>
               <span className="font-desc text-[12.5px] text-zinc-500">grade</span>
             </div>
             <p className="mt-2 font-desc text-[13.5px] leading-relaxed text-zinc-300">
@@ -123,8 +123,8 @@ export default async function LoopPage({
         </ol>
 
         <div className="mt-7 flex items-center justify-between font-desc text-[12.5px] text-zinc-500">
-          <a href="/api/methodology" className="transition-colors hover:text-[#E7AC55]">How the score is computed →</a>
-          <Link href="/season" className="transition-colors hover:text-[#E7AC55]">Season Index →</Link>
+          <a href="/api/methodology" className="transition-colors hover:text-zinc-200 hover:underline">How the score is computed →</a>
+          <Link href="/season" className="transition-colors hover:text-zinc-200 hover:underline">Season Index →</Link>
         </div>
       </main>
     </div>

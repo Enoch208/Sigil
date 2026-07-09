@@ -15,10 +15,10 @@ function NavItem({ icon, label, href, active }: { icon: IconSvgElement; label: s
     <Link
       href={href}
       className={`flex items-center gap-3 rounded-xl px-3 py-2 font-desc text-[13px] transition-colors ${
-        active ? "bg-white/[0.05] text-[#F4F5F7]" : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-200"
+        active ? "bg-white/[0.07] text-[#F4F5F7]" : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-200"
       }`}
     >
-      <HugeiconsIcon icon={icon} size={17} strokeWidth={1.7} className={active ? "text-[#E7AC55]" : ""} />
+      <HugeiconsIcon icon={icon} size={17} strokeWidth={1.7} className={active ? "text-[#F4F5F7]" : ""} />
       {label}
     </Link>
   );
@@ -42,7 +42,7 @@ export function DashboardSidebar() {
       </nav>
 
       <div className="mt-auto flex flex-col gap-2">
-        <div className="rounded-2xl border border-white/[0.06] bg-[#12141C] p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
+        <div className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
           <div className="flex items-center gap-2">
             <HugeiconsIcon icon={Shield01Icon} size={15} className="text-[#5CC79E]" />
             <span className="font-desc text-[12px] font-medium text-[#F4F5F7]">Self-proving loop</span>
@@ -50,7 +50,7 @@ export function DashboardSidebar() {
           <p className="mt-2 font-desc text-[11.5px] leading-relaxed text-zinc-400">
             Our own <span className="font-mono">LOOP.md</span> scores 100 — CI-gated, run-verified 6/6.
           </p>
-          <Link href="/l/loopscope/sigil" className="mt-3 inline-block font-desc text-[12px] font-medium text-[#E7AC55] transition-opacity hover:opacity-80">
+          <Link href="/l/loopscope/sigil" className="mt-3 inline-block font-desc text-[12px] font-medium text-zinc-300 transition-colors hover:text-zinc-100">
             View loop →
           </Link>
         </div>

@@ -13,7 +13,7 @@ import { listProjects } from "@/lib/loop/fixtures/registry";
 import { DashboardSidebar } from "@/components/app/dashboard-sidebar";
 import { DashboardRail } from "@/components/app/dashboard-rail";
 
-const CARD = "rounded-2xl border border-white/[0.06] bg-[#12141C] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]";
+const CARD = "rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]";
 
 const STATUS: Record<SeasonEntry["status"], { text: string; bar: string; glow: string; pill: string }> = {
   verified: { text: "text-[#5CC79E]", bar: "bg-gradient-to-r from-[#3EA87D] to-[#5BC295]", glow: "shadow-[0_0_18px_-3px_rgba(91,194,149,0.55)]", pill: "text-[#6FD0AA] border-[#5BC295]/20 bg-[#5BC295]/10" },
@@ -66,7 +66,7 @@ export default async function SeasonPage() {
         <div className="mt-7 grid grid-cols-4 gap-4 max-lap:grid-cols-2">
           <StatCard icon={DashboardSquare01Icon} label="Projects indexed" value={String(summary.totals.projects)} />
           <StatCard icon={CheckmarkBadge01Icon} label="Machine-checkable logs" value={`${machineCheckable}/${summary.totals.projects}`} sub="line-by-line" tone="text-[#5CC79E]" />
-          <StatCard icon={Analytics01Icon} label="Average integrity" value={`${avgIntegrity}`} tone="text-[#E7AC55]" />
+          <StatCard icon={Analytics01Icon} label="Average integrity" value={`${avgIntegrity}`} />
           <StatCard icon={Alert01Icon} label="Contradicted lines" value={String(summary.totals.contradicted)} tone={summary.totals.contradicted ? "text-[#DB9090]" : "text-zinc-500"} />
         </div>
 
@@ -105,7 +105,7 @@ export default async function SeasonPage() {
 
         <p className="mt-5 max-w-[640px] font-desc text-[12.5px] leading-relaxed text-zinc-500">
           Machine-verifiable logs are scored line-by-line; narrative (prose) logs are marked neutrally — never scored down.
-          <Link href="/api/methodology" className="ml-1 text-[#E7AC55] transition-opacity hover:opacity-80">How the score is computed →</Link>
+          <Link href="/api/methodology" className="ml-1 text-zinc-400 transition-colors hover:text-zinc-200 hover:underline">How the score is computed →</Link>
         </p>
       </main>
 

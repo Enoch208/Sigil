@@ -34,9 +34,9 @@ export function DashboardRail({ summary, spotlight }: { summary: SeasonSummary; 
   }
 
   return (
-    <aside className="sticky top-0 flex h-screen w-[340px] shrink-0 flex-col gap-5 overflow-y-auto border-l border-white/[0.06] bg-[#090A0C] px-6 py-8 max-lg:hidden">
+    <aside className="sticky top-0 flex h-screen w-[356px] shrink-0 flex-col gap-5 overflow-y-auto border-l border-white/[0.06] bg-[#090A0C] px-8 py-8 max-lg:hidden">
       {spotlight ? (
-        <div className="rounded-2xl border border-white/[0.06] bg-[#12141C] p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
+        <div className="rounded-2xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
           <div className="font-desc text-[10px] font-medium uppercase tracking-[0.16em] text-zinc-500">Self-proving loop</div>
           <div className="mt-4 flex items-center gap-4">
             <ScoreRing score={spotlight.score} contradicted={spotlight.contradicted} />
@@ -54,12 +54,12 @@ export function DashboardRail({ summary, spotlight }: { summary: SeasonSummary; 
 
       <div id="fingerprints">
         <div className="flex items-center gap-2 font-display text-[14px] font-semibold tracking-tight">
-          <HugeiconsIcon icon={FingerPrintIcon} size={15} className="text-[#E7AC55]" /> Failure fingerprints
+          <HugeiconsIcon icon={FingerPrintIcon} size={15} className="text-zinc-400" /> Failure fingerprints
         </div>
         {summary.fingerprints.length ? (
           <div className="mt-3 space-y-1.5">
             {summary.fingerprints.map((f) => (
-              <div key={f.signature} className="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#12141C] px-3.5 py-2">
+              <div key={f.signature} className="flex items-center justify-between rounded-xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] px-3.5 py-2">
                 <span className="font-mono text-[11.5px] text-zinc-400">{f.signature}</span>
                 <span className="font-mono text-[11.5px] text-[#DB9090]">×{f.count}</span>
               </div>
