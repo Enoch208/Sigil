@@ -1,0 +1,37 @@
+name: "Sigil — Loop Integrity"
+description: "Cross-verify a project's LOOP.md against its git history and gate the PR on its Loop Integrity Score."
+author: "Enoch208"
+branding:
+  icon: "check-circle"
+  color: "yellow"
+
+inputs:
+  loop-file:
+    description: "Path to the LOOP.md to audit."
+    required: false
+    default: "LOOP.md"
+  threshold:
+    description: "Fail the check if the Loop Integrity Score is below this (0-100)."
+    required: false
+    default: "0"
+
+outputs:
+  score:
+    description: "Loop Integrity Score (0-100)."
+    value: ${{ steps.sigil.outputs.score }}
+  contradicted:
+    description: "Number of contradicted LOOP.md lines."
+    value: ${{ steps.sigil.outputs.contradicted }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: "22"
+    - id: sigil
+      shell: bash
+      run: node "${{ github.action_path }}/action/score-loop.mjs"
+      env:
+        INPUT_LOOP_FILE: ${{ inputs.loop-file }}
+        INPUT_THRESHOLD: ${{ inputs.threshold }}
