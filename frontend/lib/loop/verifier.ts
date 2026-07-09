@@ -39,14 +39,26 @@ function verifyLine(
   runsByTest: Map<string, Run[]>,
   order: OrderState,
   available: { commits: boolean; runs: boolean },
+  duplicatedRuns: Set<string>,
 ): LineVerdict {
   const checks: CheckResult[] = [];
   const reasons: string[] = [];
+  let contradicted = false;
+  let mismatch = false;
+
+  // A TestSprite run can verify at most one line; reusing a run id across lines
+  // is a fabrication signal detectable from the log alone (no source needed).
+  if (line.runId && duplicatedRuns.has(line.runId)) {
+    checks.push({ check: "run-unique", status: "fail", detail: "run id reused on another line" });
+    reasons.push("This run ID is claimed by more than one line.");
+    contradicted = true;
+  }
 
   const checkableSha = Boolean(line.commitSha) && available.commits;
   const checkableRun = Boolean(line.runId) && available.runs;
 
   if (!checkableSha && !checkableRun) {
+    if (contradicted) return { line, verdict: "contradicted", checks, reasons };
     reasons.push(
       line.commitSha || line.runId
         ? "Anchored, but the referenced source was not ingested."
@@ -54,9 +66,6 @@ function verifyLine(
     );
     return { line, verdict: "unverifiable", checks, reasons };
   }
-
-  let contradicted = false;
-  let mismatch = false;
 
   let commit: Commit | undefined;
   if (checkableSha) {
@@ -176,9 +185,17 @@ export function verifyLoop({ lines, commits, runs, available }: VerifyInput): Lo
     }
   }
 
+  const runIdCounts = new Map<string, number>();
+  for (const l of lines) {
+    if (l.runId) runIdCounts.set(l.runId, (runIdCounts.get(l.runId) ?? 0) + 1);
+  }
+  const duplicatedRuns = new Set(
+    [...runIdCounts].filter(([, n]) => n > 1).map(([id]) => id),
+  );
+
   const order: OrderState = { maxCommitTs: Number.NEGATIVE_INFINITY };
   const verdicts = lines.map((line) =>
-    verifyLine(line, findCommit, runById, runsByTest, order, availability),
+    verifyLine(line, findCommit, runById, runsByTest, order, availability, duplicatedRuns),
   );
 
   return { verdicts, score: scoreLoop(verdicts) };

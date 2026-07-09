@@ -93,6 +93,7 @@ export type CheckName =
   | "sha-order"
   | "run-exists"
   | "run-verdict"
+  | "run-unique"
   | "timestamp-coherence"
   | "banked-pass";
 

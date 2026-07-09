@@ -145,6 +145,31 @@ describe("verifyLoop — short/full SHA matching (real LOOP.md vs GitHub API)", 
   });
 });
 
+describe("verifyLoop — duplicate run id (fabrication signal)", () => {
+  it("contradicts two lines that claim the same run id", () => {
+    const lines = [
+      line({ iter: 1, testId: "TC-A-01", claimedVerdict: "pass", runId: "r_dup" }),
+      line({ iter: 2, testId: "TC-A-02", claimedVerdict: "pass", runId: "r_dup" }),
+    ];
+    const runs: Run[] = [
+      { id: "r_dup", verdict: "pass", assertionsPassed: true, timestamp: 100, testId: "TC-A-01" },
+    ];
+    const { verdicts } = verifyLoop({ lines, commits: [], runs });
+    expect(verdicts[0].verdict).toBe("contradicted");
+    expect(verdicts[1].verdict).toBe("contradicted");
+    expect(checkStatus(verdicts[0].checks, "run-unique")).toBe("fail");
+  });
+
+  it("leaves a uniquely-used run id alone", () => {
+    const lines = [line({ testId: "TC-A-01", claimedVerdict: "pass", runId: "r_uniq" })];
+    const runs: Run[] = [
+      { id: "r_uniq", verdict: "pass", assertionsPassed: true, timestamp: 100, testId: "TC-A-01" },
+    ];
+    const { verdicts } = verifyLoop({ lines, commits: [], runs });
+    expect(verdicts[0].verdict).toBe("verified");
+  });
+});
+
 describe("verifyLoop — partial source availability", () => {
   it("marks a run-anchored line unverifiable (not contradicted) when runs were not ingested", () => {
     const lines = [line({ testId: "TC-A-01", claimedVerdict: "pass", runId: "r_1" })];
