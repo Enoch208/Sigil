@@ -3,7 +3,7 @@ import type { ClaimedVerdict, LoopLine, ParseFlag, ParsedLoop } from "./types";
 const MAKER = /\[maker=([^\]]+)\]/i;
 const ITER = /\[iter=([^\]]+)\]/i;
 const TEST_ID = /\bTC-[A-Za-z]+-\d+\b/;
-const VERDICT = /\b(PASS|FAIL)\b/gi;
+const VERDICT = /\bPASS\b|\bFAIL\b|[✅❌]/gi;
 const DESC_STRAIGHT = /"([^"]*)"/;
 const DESC_SMART = /[“]([^”]*)[”]/;
 const COMMIT = /\bcommit\s+([0-9a-f]{6,40})\b/i;
@@ -18,14 +18,16 @@ function isCandidate(line: string): boolean {
     MAKER.test(line) ||
     ITER.test(line) ||
     TEST_ID.test(line) ||
-    /\b(PASS|FAIL)\b/i.test(line)
+    /\b(PASS|FAIL)\b/i.test(line) ||
+    /[✅❌]/.test(line)
   );
 }
 
 function lastVerdict(line: string): ClaimedVerdict | undefined {
   const matches = line.match(VERDICT);
   if (!matches || matches.length === 0) return undefined;
-  return matches[matches.length - 1].toLowerCase() as ClaimedVerdict;
+  const last = matches[matches.length - 1].toUpperCase();
+  return last === "PASS" || last === "✅" ? "pass" : "fail";
 }
 
 function parseLine(raw: string, sourceLineNo: number): LoopLine {

@@ -129,6 +129,20 @@ describe("parseLoopMd — real-world messiness (TC-PARSE-04,06,12,13)", () => {
   });
 });
 
+describe("parseLoopMd — emoji verdicts", () => {
+  it("reads ✅ as a pass and ❌ as a fail", () => {
+    const pass = parseLoopMd('[maker=x] [iter=1] TC-E-01 "ok" ✅ [commit abc1234]');
+    expect(pass.lines[0].claimedVerdict).toBe("pass");
+    const fail = parseLoopMd('[maker=x] [iter=2] TC-E-02 "bad" ❌ [commit abc1234]');
+    expect(fail.lines[0].claimedVerdict).toBe("fail");
+  });
+
+  it("takes the last verdict when emoji and words mix", () => {
+    const { lines } = parseLoopMd('[maker=x] [iter=1] TC-E-03 "x" → FAIL → fixed → ✅ [commit abc1234]');
+    expect(lines[0].claimedVerdict).toBe("pass");
+  });
+});
+
 describe("parseLoopMd — performance (TC-PARSE-05)", () => {
   it("parses 10k lines in under 2s", () => {
     const src = Array.from(
