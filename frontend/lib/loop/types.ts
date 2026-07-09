@@ -185,6 +185,8 @@ export interface LoopTimeline {
   bankedGrowth: BankedPoint[];
   iterations: number;
   banked: number;
+  /** Longest run of consecutive non-green (unverified) events. */
+  longestRedStreak: number;
 }
 
 /** One audited project fed into the Season Index. */
@@ -197,6 +199,8 @@ export interface SeasonProject {
 
 /** A neutral, celebration-framed row in the Season Index (PRD §3.5). */
 export interface SeasonEntry {
+  /** 1-based leaderboard rank after ranking. */
+  rank: number;
   handle: string;
   project: string;
   score: number;

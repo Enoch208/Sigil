@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { parseLoopMd } from "./parser";
 import { verifyLoop } from "./verifier";
 import { buildTimeline } from "./timeline";
+import { scoreLoop } from "./scoring";
 import { CLEAN_LOOP_MD, CLEAN_COMMITS, CLEAN_RUNS } from "./fixtures/clean";
 
 function cleanTimeline() {
@@ -59,6 +60,24 @@ describe("buildTimeline — empty loop", () => {
       bankedGrowth: [],
       iterations: 0,
       banked: 0,
+      longestRedStreak: 0,
     });
+  });
+});
+
+describe("buildTimeline — red streaks", () => {
+  it("finds the longest run of consecutive non-green events", () => {
+    const mk = (verdict: "verified" | "contradicted" | "unverifiable") => ({
+      line: { raw: "", sourceLineNo: 0, parseFlags: [] },
+      verdict,
+      checks: [],
+      reasons: [],
+    });
+    const report = {
+      verdicts: [mk("verified"), mk("contradicted"), mk("contradicted"), mk("verified"), mk("unverifiable")],
+      score: scoreLoop([]),
+    };
+    const t = buildTimeline(report, { commits: [], runs: [] });
+    expect(t.longestRedStreak).toBe(2);
   });
 });

@@ -56,12 +56,24 @@ export function buildTimeline(
 
   const banked = events.filter((e) => e.banked && isGreen(e.verdict)).length;
 
+  let streak = 0;
+  let longestRedStreak = 0;
+  for (const e of events) {
+    if (isGreen(e.verdict)) {
+      streak = 0;
+    } else {
+      streak++;
+      longestRedStreak = Math.max(longestRedStreak, streak);
+    }
+  }
+
   return {
     events,
     timeToGreen,
     bankedGrowth,
     iterations: events.length,
     banked,
+    longestRedStreak,
   };
 }
 
