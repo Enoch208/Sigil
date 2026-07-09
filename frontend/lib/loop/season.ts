@@ -25,6 +25,7 @@ function key(p: { handle: string; project: string }): string {
 export function aggregateSeason(projects: SeasonProject[]): SeasonSummary {
   const entries: SeasonEntry[] = projects
     .map((p) => ({
+      rank: 0,
       handle: p.handle,
       project: p.project,
       score: p.report.score.score,
@@ -45,6 +46,9 @@ export function aggregateSeason(projects: SeasonProject[]): SeasonSummary {
         b.iterations - a.iterations ||
         key(a).localeCompare(key(b)),
     );
+  entries.forEach((e, i) => {
+    e.rank = i + 1;
+  });
 
   const clusters = new Map<CheckName, { count: number; projects: Set<string> }>();
   for (const p of projects) {

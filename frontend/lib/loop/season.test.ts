@@ -34,6 +34,7 @@ function project(
       bankedGrowth: [],
       iterations: verdicts.length,
       banked: 0,
+      longestRedStreak: 0,
       ...timeline,
     },
   };
@@ -48,6 +49,7 @@ describe("aggregateSeason — index rows", () => {
     expect(summary.entries.map((e) => e.project)).toEqual(["clean", "broken"]);
     expect(summary.entries[0].status).toBe("verified");
     expect(summary.entries[1].status).toBe("contested");
+    expect(summary.entries.map((e) => e.rank)).toEqual([1, 2]);
   });
 
   it("labels a zero-coverage narrative log neutrally, not as audited or contested", () => {
