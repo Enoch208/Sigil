@@ -2,7 +2,9 @@
 
 **The auditor for AI coding loops.** Point it at any project's `LOOP.md`, git history, and TestSprite runs; it cross-verifies all three line-by-line into a **Loop Integrity Score (0–100)** and renders the loop as a shareable, badge-backed page.
 
-> `loop · verified · 14 iter · 14 banked · integrity 100` — the SVG badge served at `/api/l/{handle}/{project}/badge.svg`
+**[Live demo](https://sigil-umber.vercel.app)** · [![loop](https://sigil-umber.vercel.app/api/l/loopscope/sigil/badge.svg)](https://sigil-umber.vercel.app/api/l/loopscope/sigil)
+
+The badge above is served live by the product at `/api/l/{handle}/{project}/badge.svg` — tamper with a loop line and it flips red.
 
 Built for TestSprite Hackathon Season 3. Repo/codename: **Sigil**.
 
