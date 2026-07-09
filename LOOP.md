@@ -64,6 +64,20 @@ Behavior-first protocol, no exceptions: plan → write a failing test (expected 
 
 [maker=claude-code] [iter=24] TC-ACTION-02 "composite action gates a PR on Loop Integrity Score" → PASS banked [commit 52123a9]
 
+## Depth — engine & product features (git-verified)
+
+[maker=claude-code] [iter=25] TC-SCORE-02 "letter grade (A+ to F) derived from the score" → FAIL (expected red) → implemented grade() → PASS banked [commit ee7539e]
+
+[maker=claude-code] [iter=26] TC-VERIFY-15 "duplicate run id across lines is contradicted (a fabrication signal)" → FAIL (expected red) → implemented run-unique check → PASS banked [commit c44e9bd]
+
+[maker=claude-code] [iter=27] TC-PARSE-15 "emoji verdicts: checkmark and cross map to the correct outcome" → FAIL (expected red) → extended verdict detection → PASS banked [commit 8a30431]
+
+[maker=claude-code] [iter=28] TC-TIME-02 "red-streak detection: longest run of non-green events" → FAIL (expected red) → implemented streak scan → PASS banked [commit c4bd9e4]
+
+[maker=claude-code] [iter=29] TC-SEASON-02 "leaderboard rank on season index entries" → FAIL (expected red) → assigned rank after sort → PASS banked [commit 85d5624]
+
+[maker=claude-code] [iter=30] TC-IDX-02 "/api/methodology serves the published methodology" → FAIL (expected red) → implemented route → PASS banked [commit b3f88fc]
+
 ## Banked coverage
 
 83 behavior tests bank green across the pure logic layer (parser 12, verifier 13, scoring 7, timeline 6, badge 9, season 8, audit 2, engine 2, methodology 4, registry 4, ingestion 9, API routes 7). Run `cd frontend && npm run test`.
