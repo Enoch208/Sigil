@@ -59,7 +59,7 @@ export function DashboardRail({ summary, spotlight }: { summary: SeasonSummary; 
         {summary.fingerprints.length ? (
           <div className="mt-3 space-y-1.5">
             {summary.fingerprints.map((f) => (
-              <div key={f.signature} className="flex items-center justify-between rounded-xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] px-3.5 py-2">
+              <div key={f.signature} className="flex items-center justify-between rounded-xl border border-white/[0.05] bg-gradient-to-b from-[#15171F] to-[#0F1116] px-3.5 py-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
                 <span className="font-mono text-[11.5px] text-zinc-400">{f.signature}</span>
                 <span className="font-mono text-[11.5px] text-[#DB9090]">×{f.count}</span>
               </div>
@@ -78,9 +78,9 @@ export function DashboardRail({ summary, spotlight }: { summary: SeasonSummary; 
               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/[0.06] bg-white/[0.02]">
                 <HugeiconsIcon icon={a.icon} size={13} className={a.color} />
               </span>
-              <div className="min-w-0">
-                <div className="truncate font-desc text-[12.5px] text-zinc-300">{a.text}</div>
-                <div className="font-mono text-[10.5px] text-zinc-600">{a.sub}</div>
+              <div className="min-w-0 space-y-0.5">
+                <div className="truncate font-desc text-[12.5px] leading-tight text-zinc-300">{a.text}</div>
+                <div className="font-mono text-[10.5px] leading-tight text-zinc-600">{a.sub}</div>
               </div>
             </div>
           ))}
