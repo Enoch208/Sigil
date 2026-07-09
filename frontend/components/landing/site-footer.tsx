@@ -46,7 +46,7 @@ export function SiteFooter() {
           </div>
 
           <div className="flex items-center justify-between gap-[18px] border-t border-hairline px-0.5 py-[22px] font-desc text-[13px] text-muted-ink max-md:flex-col max-md:items-start max-md:gap-2">
-            <span>&copy; 2026 Sigil · Loopscope</span>
+            <span>&copy; 2026 Sigil</span>
             <span>Zero secrets in git · Methodology published</span>
           </div>
         </div>

@@ -6,7 +6,7 @@ self-contained Python script hitting the live API over HTTP; TestSprite executes
 them in its sandbox and records a run ID + verdict. Backend runs bill **0
 credits**, so the whole suite gates every deploy for free.
 
-TestSprite project: `Loopscope` (`1a9ed16f-19a2-46aa-b102-b164985a15ff`, backend).
+TestSprite project: `Sigil` (`1a9ed16f-19a2-46aa-b102-b164985a15ff`, backend).
 
 Run the whole suite:
 

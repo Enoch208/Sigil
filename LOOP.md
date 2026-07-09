@@ -1,8 +1,8 @@
-# LOOP.md — Loopscope (Sigil)
+# LOOP.md — Sigil
 
 **The auditor for AI coding loops, audited by itself.**
 
-Behavior-first protocol, no exceptions: plan → write a failing test (expected red) → implement from the failure → rerun → green banks → the commit carries the SHA. Every iteration below is a real commit in this repository, cross-verified by Loopscope's own engine (`frontend/lib/loop`).
+Behavior-first protocol, no exceptions: plan → write a failing test (expected red) → implement from the failure → rerun → green banks → the commit carries the SHA. Every iteration below is a real commit in this repository, cross-verified by Sigil's own engine (`frontend/lib/loop`).
 
 **Verification status:** git-verified **and** run-verified. Every SHA exists and lands in chronological order (our own verifier scores this log at **integrity 100 / 0 contradicted**), and the loop is verified live against the deployed app by **TestSprite** — real run IDs banked below.
 

@@ -76,7 +76,7 @@ function bandColor(scoreValue: number, contradicted: number): string {
   return BANDS.red;
 }
 
-/** Compose the standard Loopscope badge from a score plus optional loop stats. */
+/** Compose the standard Sigil badge from a score plus optional loop stats. */
 export function loopBadge(
   score: LoopScore,
   meta: { iterations?: number; banked?: number } = {},

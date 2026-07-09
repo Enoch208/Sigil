@@ -1,5 +1,5 @@
 /**
- * Domain contracts for the Loopscope core engine.
+ * Domain contracts for the Sigil core engine.
  *
  * These types are the stable interface between the pure logic layer
  * (parser → verifier → scoring) and everything that consumes it: the UI,

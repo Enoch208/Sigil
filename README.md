@@ -1,6 +1,8 @@
 <div align="center">
 
-# Loopscope
+<img src="assets/cover.png" alt="Sigil — the auditor for AI coding loops" width="100%" />
+
+&nbsp;
 
 [![CI](https://github.com/Enoch208/Sigil/actions/workflows/ci.yml/badge.svg)](https://github.com/Enoch208/Sigil/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -11,11 +13,11 @@
 
 ### The auditor for AI coding loops — cross-verify a `LOOP.md` against git and TestSprite, and prove every line.
 
-Most loop tools answer one question: _can an agent show you what it did?_ Loopscope answers the harder one — **can you prove the log is true?** It ingests any project's `LOOP.md`, git history, and TestSprite run history, cross-checks every line against all three sources, and renders a **Loop Integrity Score (0–100)** with a per-line verdict — `verified` / `unverifiable` / `contradicted` / `verdict-mismatch`. The scoring methodology is public and enforced to match the code, so the score is honest by construction. The badge above is **live from the product**, scoring this repo's own loop — tamper with a line and it flips red.
+Most loop tools answer one question: _can an agent show you what it did?_ Sigil answers the harder one — **can you prove the log is true?** It ingests any project's `LOOP.md`, git history, and TestSprite run history, cross-checks every line against all three sources, and renders a **Loop Integrity Score (0–100)** with a per-line verdict — `verified` / `unverifiable` / `contradicted` / `verdict-mismatch`. The scoring methodology is public and enforced to match the code, so the score is honest by construction. The badge above is **live from the product**, scoring this repo's own loop — tamper with a line and it flips red.
 
 **[ Watch the demo ↗ ](#-demo)** &nbsp;·&nbsp; **[ Live demo ↗ ](https://sigil-umber.vercel.app)** &nbsp;·&nbsp; **[ Methodology ↗ ](#the-scoring-methodology-published-matches-the-code)** &nbsp;·&nbsp; **[ Run it locally ↗ ](#run-it-locally)**
 
-Built for the **TestSprite Hackathon Season 3**. Repo/codename: **Sigil**.
+Built for the **TestSprite Hackathon Season 3**.
 
 </div>
 
@@ -142,18 +144,18 @@ Anyone can resolve that run ID in the TestSprite dashboard. **No prose log in th
 
 ## Auditing the Season 3 field
 
-Loopscope launches with the season already indexed: it ingests each entry's public repo (via the GitHub API), scores it, and renders the whole field in one place with **Failure Fingerprints** (common bug classes, average time-to-green, verdict-mismatch frequency).
+Sigil launches with the season already indexed: it ingests each entry's public repo (via the GitHub API), scores it, and renders the whole field in one place with **Failure Fingerprints** (common bug classes, average time-to-green, verdict-mismatch frequency).
 
 Run live across the field, the finding is stark — and framed as **celebration, never policing**:
 
 - Every rival's `LOOP.md` is a **narrative** (prose and markdown tables). Real engineering, honestly logged — but **not verifiable line-by-line by any tool.** These are marked `narrative` (a neutral fact about format), never scored down.
-- **Loopscope's own log is the only one in the field where every line self-proves** — and our open-methodology engine scores it 100.
+- **Sigil's own log is the only one in the field where every line self-proves** — and our open-methodology engine scores it 100.
 
 The rules of engagement are non-negotiable: neutral language for unverifiable logs, methodology one click away, opt-out honored within minutes, and organizers consulted before the index is published. An auditor that looks unfair has no product.
 
 ## The self-proving loop
 
-Loopscope audits **itself**. This repo's own [`LOOP.md`](LOOP.md) is 20 machine-checkable iterations, and `npm run self-audit` scores it with the real engine against real git history:
+Sigil audits **itself**. This repo's own [`LOOP.md`](LOOP.md) is 20 machine-checkable iterations, and `npm run self-audit` scores it with the real engine against real git history:
 
 ```
 Loop Integrity: score 100 · integrity 100 · coverage 100 · 20/20 verified · 0 contradicted ✓
