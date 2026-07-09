@@ -4,7 +4,7 @@
 
 Behavior-first protocol, no exceptions: plan → write a failing test (expected red) → implement from the failure → rerun → green banks → the commit carries the SHA. Every iteration below is a real commit in this repository, cross-verified by Sigil's own engine (`frontend/lib/loop`).
 
-**Verification status:** git-verified **and** run-verified. Every SHA exists and lands in chronological order (our own verifier scores this log at **integrity 100 / 0 contradicted**), and the loop is verified live against the deployed app by **TestSprite** — real run IDs banked below.
+**Verification status:** git-verified **and** run-verified. Every SHA exists and lands in chronological order (our own verifier scores this log at **integrity 100 / 0 contradicted**), and the loop is verified live against the deployed app by **TestSprite** — real run IDs banked below. Run `npm run run-verify` and the engine itself fetches those runs from TestSprite and re-checks `run-exists` + `run-verdict` on every anchored line (6 of 6 green).
 
 ## Iterations (logic layer — behavior-first, Vitest red→green)
 
@@ -51,6 +51,12 @@ Behavior-first protocol, no exceptions: plan → write a failing test (expected 
 [maker=claude-code] [iter=19] TC-LIVE-05 "report scores the clean loop 100 with zero contradicted" → PASS banked [commit 49b830c · run 378b7922-7ca3-4919-81ff-68172f021fc7]
 
 [maker=claude-code] [iter=20] TC-LIVE-06 "unknown project returns 404" → PASS banked [commit 49b830c · run 31e2eb5a-58f2-49d2-a140-4c18c6a97a27]
+
+## Engine — run verification (git-verified)
+
+[maker=claude-code] [iter=21] TC-INGEST-02 "TestSprite run mapper: run JSON to engine Run, blocked vs failed-assertions" → FAIL (expected red) → implemented mapper → PASS banked [commit 265e44f]
+
+[maker=claude-code] [iter=22] TC-VERIFY-14 "run-verify LOOP.md against TestSprite through the verifier (6/6 run-exists + run-verdict)" → PASS banked [commit c78bb83]
 
 ## Banked coverage
 

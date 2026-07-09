@@ -185,7 +185,7 @@ A few decisions I'm proud of, and the bugs that taught me something:
 | **GitHub ingestion** | Real. Live commits + `LOOP.md` via the GitHub API, tokened, paginated. Verified against real public repos. |
 | **Season Index of the field** | Real ingestion; rendered **fairly** (prose logs marked `narrative`, never scored down). Public publish gated on organizer blessing + opt-out. |
 | **Badge / report / season / health APIs** | Real, deployed on Vercel, covered by the TestSprite suite. |
-| **Run-verification _inside the engine_** | Partial — the verifier's `RunSource` (fetching TestSprite runs to cross-check verdicts server-side) is the next step. Today runs are verified via the TestSprite CLI and their IDs are banked in `LOOP.md`; the engine treats not-yet-ingested runs as neutral. Stated plainly, not hidden. |
+| **Run-verification _inside the engine_** | Real. `npm run run-verify` fetches this repo's `LOOP.md` run IDs from TestSprite, maps them, and re-checks `run-exists` + `run-verdict` through the verifier — **6/6 pass**. The loop is git-verified *and* run-verified by the auditor itself, not just via the CLI. |
 | **Demo Season projects** | Fixtures (`loopscope/sigil`, `contested`, `nexus/authflow`) exercise every verdict path; the real field is ingested on demand. |
 
 ## API
