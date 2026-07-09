@@ -11,6 +11,16 @@ function clamp(n: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, n));
 }
 
+/** A letter grade for a Loop Integrity Score, for at-a-glance UI. */
+export function grade(score: number): "A+" | "A" | "B" | "C" | "D" | "F" {
+  if (score >= 100) return "A+";
+  if (score >= 95) return "A";
+  if (score >= 85) return "B";
+  if (score >= 70) return "C";
+  if (score >= 50) return "D";
+  return "F";
+}
+
 /**
  * Compute the published Loop Integrity Score and its honest sub-metrics.
  *

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { scoreLoop } from "./scoring";
+import { scoreLoop, grade } from "./scoring";
 import type { LineVerdict, Verdict } from "./types";
 
 function verdicts(verdict: Verdict, n: number): LineVerdict[] {
@@ -65,5 +65,16 @@ describe("scoreLoop — published methodology", () => {
     // 1 verified + 4 contradicted: 20 - 100 -> clamp 0
     const s = scoreLoop([...verdicts("verified", 1), ...verdicts("contradicted", 4)]);
     expect(s.score).toBe(0);
+  });
+});
+
+describe("grade — a letter grade from the score", () => {
+  it("maps score bands to letters", () => {
+    expect(grade(100)).toBe("A+");
+    expect(grade(96)).toBe("A");
+    expect(grade(88)).toBe("B");
+    expect(grade(72)).toBe("C");
+    expect(grade(55)).toBe("D");
+    expect(grade(30)).toBe("F");
   });
 });
