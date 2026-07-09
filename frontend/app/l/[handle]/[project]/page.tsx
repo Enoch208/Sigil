@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { audit, grade } from "@/lib/loop";
 import type { Verdict } from "@/lib/loop";
 import { getProjectSources } from "@/lib/loop/fixtures/registry";
+import { AppNav } from "@/components/app/app-nav";
 
 const VERDICT: Record<Verdict, { dot: string; text: string; label: string }> = {
   verified: { dot: "bg-positive", text: "text-positive", label: "verified" },
@@ -45,12 +46,13 @@ export default async function LoopPage({
     : null;
 
   return (
-    <main className="min-h-screen bg-page text-fg-primary">
-      <div className="mx-auto max-w-[920px] px-6 py-16 max-md:py-10">
+    <div className="min-h-screen bg-page text-fg-primary">
+      <AppNav />
+      <main className="mx-auto max-w-[920px] px-6 py-14 max-md:py-9">
         {/* header */}
         <div className="flex items-center justify-between gap-4">
-          <a href="/" className="font-mono text-[13px] text-fg-muted transition-colors hover:text-fg-body">
-            ← sigil
+          <a href="/season" className="font-mono text-[13px] text-fg-muted transition-colors hover:text-fg-body">
+            ← Season Index
           </a>
           <span className={`rounded-pill border px-3 py-1 font-desc text-[12px] font-medium ${st.cls}`}>
             {st.label}
@@ -140,7 +142,7 @@ export default async function LoopPage({
           <a href="/api/methodology" className="transition-colors hover:text-accent">How the score is computed →</a>
           <a href="/season" className="transition-colors hover:text-accent">Season Index →</a>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
