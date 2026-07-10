@@ -142,6 +142,18 @@ The loop is real: the very first run came back **`blocked`** (a backend test ref
 
 Anyone can resolve that run ID in the TestSprite dashboard. **No prose log in the field is verifiable line-by-line like this.**
 
+### Frontend, end-to-end — and Sigil auditing its own checker
+
+Beyond the API, I wrote **24 behavior-named frontend E2E tests** that drive the real deployed UI — landing → GitHub sign-in → dashboard → loop replay → methodology → badge (plans in [`testsprite-plans/`](testsprite-plans/)). Run against the live URL, TestSprite returned **15 `passed` and 9 `blocked`**.
+
+None of the 9 are real failures. Every blocked run reports `failedCount: 0` — **every assertion passed** — and TestSprite's own summaries read *"All required checks passed."* This is the exact **"blocked verdict with passing assertions"** known checker issue (PRD §3.2), and it's deterministic: re-running doesn't clear it.
+
+So I pointed Sigil at its own test runs. `npm run testsprite:reconcile` maps each live run through the same `mapTestSpriteRun` + verifier the product uses, and reclassifies the mismatches:
+
+<img src="assets/testsprite-reconcile.png" alt="Sigil reconciling TestSprite verdicts — 24 of 24 effective green, 0 real failures" width="100%" />
+
+**Effective green = 24/24, genuine failures = 0.** A raw "20/20 green" screenshot is *unaudited*: TestSprite's checker silently mislabels correct runs as `blocked`, and no one running the CLI would ever know. Sigil surfaces every mismatch and reconciles it against the assertion data — the auditor, run on itself.
+
 ## Auditing the Season 3 field
 
 Sigil launches with the season already indexed: it ingests each entry's public repo (via the GitHub API), scores it, and renders the whole field in one place with **Failure Fingerprints** (common bug classes, average time-to-green, verdict-mismatch frequency).
