@@ -52,7 +52,7 @@ export function DashboardRail({ summary, spotlight }: { summary: SeasonSummary; 
         </div>
       ) : null}
 
-      <div id="fingerprints">
+      <div id="fingerprints" className="scroll-mt-8">
         <div className="flex items-center gap-2 font-display text-[14px] font-semibold tracking-tight">
           <HugeiconsIcon icon={FingerPrintIcon} size={15} className="text-zinc-400" /> Failure fingerprints
         </div>

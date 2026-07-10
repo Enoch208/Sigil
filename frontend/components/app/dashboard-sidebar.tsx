@@ -11,20 +11,25 @@ import {
 } from "@hugeicons/core-free-icons";
 
 function NavItem({ icon, label, href, active }: { icon: IconSvgElement; label: string; href: string; active?: boolean }) {
-  return (
-    <Link
-      href={href}
-      className={`flex items-center gap-3 rounded-xl px-3 py-2 font-desc text-[13px] transition-colors ${
-        active ? "bg-white/[0.07] text-[#F4F5F7]" : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-200"
-      }`}
-    >
+  const className = `flex items-center gap-3 rounded-xl px-3 py-2 font-desc text-[13px] transition-colors ${
+    active ? "bg-white/[0.07] text-[#F4F5F7]" : "text-zinc-500 hover:bg-white/[0.03] hover:text-zinc-200"
+  }`;
+  const inner = (
+    <>
       <HugeiconsIcon icon={icon} size={17} strokeWidth={1.7} className={active ? "text-[#F4F5F7]" : ""} />
       {label}
-    </Link>
+    </>
+  );
+  // Hash anchors (in-page section links) need a native <a> so the browser scrolls
+  // to the fragment — App Router <Link> does not scroll on same-route hash changes.
+  return href.includes("#") ? (
+    <a href={href} className={className}>{inner}</a>
+  ) : (
+    <Link href={href} className={className}>{inner}</Link>
   );
 }
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ active = "overview" }: { active?: "overview" | "methodology" | "none" }) {
   return (
     <aside className="sticky top-0 flex h-screen w-[236px] shrink-0 flex-col border-r border-white/[0.06] bg-[#090A0C] px-4 py-6 max-lap:hidden">
       <Link href="/" className="flex items-center gap-2.5 px-2">
@@ -35,10 +40,10 @@ export function DashboardSidebar() {
 
       <nav className="mt-10 flex flex-col gap-0.5">
         <div className="px-3 pb-2 font-desc text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-600">Audit</div>
-        <NavItem icon={DashboardSquare01Icon} label="Overview" href="/season" active />
+        <NavItem icon={DashboardSquare01Icon} label="Overview" href="/season" active={active === "overview"} />
         <NavItem icon={GridIcon} label="Projects" href="/season#leaderboard" />
         <NavItem icon={FingerPrintIcon} label="Fingerprints" href="/season#fingerprints" />
-        <NavItem icon={FileValidationIcon} label="Methodology" href="/api/methodology" />
+        <NavItem icon={FileValidationIcon} label="Methodology" href="/methodology" active={active === "methodology"} />
       </nav>
 
       <div className="mt-auto flex flex-col gap-2">

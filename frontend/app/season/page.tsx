@@ -70,7 +70,7 @@ export default async function SeasonPage() {
           <StatCard icon={Alert01Icon} label="Contradicted lines" value={String(summary.totals.contradicted)} tone={summary.totals.contradicted ? "text-[#DB9090]" : "text-zinc-500"} />
         </div>
 
-        <div id="leaderboard" className={`mt-4 ${CARD} p-6`}>
+        <div id="leaderboard" className={`mt-4 scroll-mt-8 ${CARD} p-6`}>
           <div className="flex items-center justify-between">
             <h2 className="font-display text-[15px] font-semibold tracking-tight">Loop Integrity by project</h2>
             <span className="font-mono text-[11px] text-zinc-600">score · 0–100</span>
