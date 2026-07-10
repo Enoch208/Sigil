@@ -3,7 +3,9 @@
 /** @file hero.tsx - Hero with headline, CTAs and concentric ring decor with orbiting icon cards. */
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
+  Github01Icon,
   GitBranchIcon,
   CheckmarkBadge02Icon,
   Activity01Icon,
@@ -125,19 +127,23 @@ export function Hero() {
 
         <div className="mt-[clamp(1.5rem,3vw,2rem)] flex w-full flex-row flex-wrap items-center justify-center gap-3 min-[480px]:w-auto min-[480px]:gap-4">
           <Link
-            href="#claim"
-            className="inline-flex min-h-[40px] items-center justify-center whitespace-nowrap rounded-none bg-orange px-[18px] text-[16px] font-medium text-accent-ink transition hover:brightness-105"
+            href="/season"
+            className="inline-flex min-h-[40px] items-center justify-center gap-2 whitespace-nowrap rounded-none bg-orange px-[18px] text-[16px] font-medium text-accent-ink transition hover:brightness-105"
             style={{ boxShadow: PRIMARY_SHADOW }}
           >
-            Claim Your Badge
+            <HugeiconsIcon icon={PlayCircleIcon} size={18} strokeWidth={2} />
+            View live demo
           </Link>
-          <Link
-            href="#faq"
-            className="inline-flex min-h-[40px] items-center justify-center whitespace-nowrap rounded-none bg-elevated px-[18px] text-[16px] font-medium text-white transition hover:brightness-110"
+          <a
+            href="https://github.com/Enoch208/Sigil"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-[40px] items-center justify-center gap-2 whitespace-nowrap rounded-none bg-elevated px-[18px] text-[16px] font-medium text-white transition hover:brightness-110"
             style={{ boxShadow: SECONDARY_SHADOW }}
           >
-            Read the methodology
-          </Link>
+            <HugeiconsIcon icon={Github01Icon} size={18} strokeWidth={1.8} />
+            GitHub
+          </a>
         </div>
       </div>
     </section>

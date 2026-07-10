@@ -3,6 +3,8 @@
 /** @file site-nav.tsx - Fixed pill navbar with hamburger dropdown menu (landing page). */
 import { useState } from "react";
 import Link from "next/link";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Github01Icon } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils/utils";
 
 const NAV_LINKS = [
@@ -75,15 +77,24 @@ export function SiteNav() {
             </div>
             <div
               className={cn(
-                "flex items-center justify-end border-l border-hairline py-3 transition-[width,padding] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] max-md:hidden",
+                "flex items-center justify-end gap-1.5 border-l border-hairline py-3 transition-[width,padding] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] max-md:hidden",
                 open ? "w-[205px] pl-3 pr-6" : "w-[181px] px-3",
               )}
             >
+              <a
+                href="https://github.com/Enoch208/Sigil"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub repository"
+                className="grid h-8 w-8 place-items-center text-ink transition hover:text-orange"
+              >
+                <HugeiconsIcon icon={Github01Icon} size={19} strokeWidth={1.8} />
+              </a>
               <Link
-                href="#claim"
+                href="/signin"
                 className="rounded-none bg-orange px-3.5 py-1.5 text-[14px] font-medium leading-[16.8px] text-accent-ink shadow-[0_0_0_1px_#b9791a,inset_0_1.4px_1px_rgba(255,255,255,0.28)] transition hover:brightness-105"
               >
-                Claim Your Badge
+                Sign in
               </Link>
             </div>
           </nav>
@@ -113,6 +124,31 @@ export function SiteNav() {
 
             <div
               style={{ transitionDelay: open ? `${40 + NAV_LINKS.length * 50}ms` : "300ms" }}
+              className={cn(
+                "flex flex-col gap-2 py-4 transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)]",
+                open ? "translate-x-0" : "-translate-x-4",
+              )}
+            >
+              <Link
+                href="/season"
+                onClick={() => setOpen(false)}
+                tabIndex={open ? undefined : -1}
+                className="flex items-center justify-center rounded-none bg-orange px-4 py-2.5 text-[15px] font-medium text-accent-ink shadow-[0_0_0_1px_#b9791a,inset_0_1.4px_1px_rgba(255,255,255,0.28)]"
+              >
+                View live demo
+              </Link>
+              <Link
+                href="/signin"
+                onClick={() => setOpen(false)}
+                tabIndex={open ? undefined : -1}
+                className="flex items-center justify-center gap-2 rounded-none border border-strong px-4 py-2.5 text-[15px] font-medium text-ink"
+              >
+                <HugeiconsIcon icon={Github01Icon} size={17} strokeWidth={1.8} /> Sign in
+              </Link>
+            </div>
+
+            <div
+              style={{ transitionDelay: open ? `${40 + (NAV_LINKS.length + 1) * 50}ms` : "300ms" }}
               className={cn(
                 "flex items-center py-4 transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)]",
                 open ? "translate-x-0" : "-translate-x-4",

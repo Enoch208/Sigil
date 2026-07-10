@@ -8,7 +8,9 @@ import {
   FileValidationIcon,
   Shield01Icon,
   Github01Icon,
+  Logout01Icon,
 } from "@hugeicons/core-free-icons";
+import { getSession } from "@/lib/auth/session";
 
 function NavItem({ icon, label, href, active }: { icon: IconSvgElement; label: string; href: string; active?: boolean }) {
   const className = `flex items-center gap-3 rounded-xl px-3 py-2 font-desc text-[13px] transition-colors ${
@@ -29,7 +31,8 @@ function NavItem({ icon, label, href, active }: { icon: IconSvgElement; label: s
   );
 }
 
-export function DashboardSidebar({ active = "overview" }: { active?: "overview" | "methodology" | "none" }) {
+export async function DashboardSidebar({ active = "overview" }: { active?: "overview" | "methodology" | "none" }) {
+  const session = await getSession();
   return (
     <aside className="sticky top-0 flex h-screen w-[236px] shrink-0 flex-col border-r border-white/[0.06] bg-[#090A0C] px-4 py-6 max-lap:hidden">
       <Link href="/" className="flex items-center gap-2.5 px-2">
@@ -59,12 +62,30 @@ export function DashboardSidebar({ active = "overview" }: { active?: "overview" 
             View loop →
           </Link>
         </div>
-        <a
-          href="https://github.com/Enoch208/Sigil"
-          className="flex items-center gap-3 rounded-xl px-3 py-2 font-desc text-[12.5px] text-zinc-500 transition-colors hover:text-zinc-200"
-        >
-          <HugeiconsIcon icon={Github01Icon} size={17} strokeWidth={1.7} /> GitHub
-        </a>
+        {session ? (
+          <div className="flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={session.avatar} alt="" className="h-7 w-7 shrink-0 rounded-full border border-white/[0.08]" />
+            <div className="min-w-0 flex-1">
+              <div className="truncate font-desc text-[12px] font-medium text-[#F4F5F7]">{session.name}</div>
+              <div className="truncate font-mono text-[10.5px] text-zinc-500">@{session.login}{session.demo ? " · demo" : ""}</div>
+            </div>
+            <a
+              href="/api/auth/signout"
+              aria-label="Sign out"
+              className="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-zinc-500 transition-colors hover:bg-white/[0.05] hover:text-zinc-300"
+            >
+              <HugeiconsIcon icon={Logout01Icon} size={15} strokeWidth={1.8} />
+            </a>
+          </div>
+        ) : (
+          <Link
+            href="/signin"
+            className="flex items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.05] px-3 py-2.5 font-desc text-[12.5px] font-medium text-[#F4F5F7] transition-colors hover:bg-white/[0.09]"
+          >
+            <HugeiconsIcon icon={Github01Icon} size={16} strokeWidth={1.8} /> Sign in with GitHub
+          </Link>
+        )}
       </div>
     </aside>
   );
