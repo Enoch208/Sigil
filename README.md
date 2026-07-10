@@ -29,7 +29,7 @@ _~90 seconds — the real product driven live. A verified badge flips **red** th
 
 <video src="https://github.com/user-attachments/assets/6300a5d8-407f-4e23-bf5b-52f8886b2608" controls style="max-width: 100%; border-radius: 8px;"></video>
 
-Try it live at **[sigil-umber.vercel.app](https://sigil-umber.vercel.app)**
+Try it live at **[sigil-umber.vercel.app](https://sigil-umber.vercel.app)** · **[See the post ↗](https://x.com/dreyethh/status/2075688192968159262?s=46)**
 
 ---
 
