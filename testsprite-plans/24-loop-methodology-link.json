@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "'How the score is computed' link opens the methodology",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /l/loopscope/sigil"
+    },
+    {
+      "type": "action",
+      "description": "Click the 'How the score is computed' link"
+    },
+    {
+      "type": "assertion",
+      "description": "The page shows the term 'Coverage'"
+    }
+  ]
+}

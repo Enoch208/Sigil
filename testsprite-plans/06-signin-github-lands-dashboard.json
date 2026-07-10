@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Continue with GitHub signs in and lands on the dashboard",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /signin"
+    },
+    {
+      "type": "action",
+      "description": "Click the 'Continue with GitHub' button"
+    },
+    {
+      "type": "assertion",
+      "description": "The 'Overview' heading is visible"
+    }
+  ]
+}

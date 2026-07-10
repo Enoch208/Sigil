@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Sign out clears the session and returns to the landing page",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /signin and click 'Continue with GitHub' to sign in"
+    },
+    {
+      "type": "action",
+      "description": "Click the sign-out icon button labelled 'Sign out' in the sidebar"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'View live demo' button is visible"
+    }
+  ]
+}

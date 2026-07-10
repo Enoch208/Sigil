@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "'Just exploring' link opens the dashboard without an account",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /signin"
+    },
+    {
+      "type": "action",
+      "description": "Click the 'Just exploring? View the live demo' link"
+    },
+    {
+      "type": "assertion",
+      "description": "The 'Overview' heading is visible"
+    }
+  ]
+}

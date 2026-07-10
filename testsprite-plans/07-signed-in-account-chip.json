@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Signed-in dashboard shows the account identity",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /signin and click 'Continue with GitHub'"
+    },
+    {
+      "type": "assertion",
+      "description": "The sidebar shows the text 'The Octocat'"
+    },
+    {
+      "type": "assertion",
+      "description": "The sidebar shows the handle '@octocat'"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Loop page renders the Loop Integrity badge",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /l/loopscope/sigil"
+    },
+    {
+      "type": "assertion",
+      "description": "An image with alt text 'Loop Integrity badge' is present"
+    }
+  ]
+}

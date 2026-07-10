@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Sign-in page offers Continue with GitHub and a browse-demo option",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /signin"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'Continue with GitHub' button is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'View the live demo' link is visible"
+    }
+  ]
+}

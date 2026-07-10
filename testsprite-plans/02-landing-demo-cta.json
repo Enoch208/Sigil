@@ -1,0 +1,23 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Hero 'View live demo' opens the Season dashboard",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /"
+    },
+    {
+      "type": "action",
+      "description": "Click the 'View live demo' button in the hero"
+    },
+    {
+      "type": "assertion",
+      "description": "The 'Overview' heading is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "A stat card labelled 'Projects indexed' is visible"
+    }
+  ]
+}

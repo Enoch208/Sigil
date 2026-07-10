@@ -1,0 +1,15 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Signed-out dashboard shows a Sign in with GitHub prompt",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /season without signing in"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'Sign in with GitHub' button is visible"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Self-proving loop spotlight is highlighted on the dashboard",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /season"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'Self-proving loop' panel is visible in the right sidebar"
+    },
+    {
+      "type": "assertion",
+      "description": "An 'Open loop' link is visible inside that panel"
+    }
+  ]
+}

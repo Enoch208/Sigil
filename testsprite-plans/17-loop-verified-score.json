@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Verified loop shows integrity 100 and a verified status",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /l/loopscope/sigil"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'verified' status pill is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "A heading 'Loop replay' is visible"
+    }
+  ]
+}

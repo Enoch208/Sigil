@@ -14,3 +14,6 @@ docs/superpowers/
 
 # Local coding-agent skills (installed by tooling)
 .claude/
+
+# TestSprite local run artifacts (failure bundles, videos)
+.testsprite/

@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Methodology page explains how the score is computed",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /methodology"
+    },
+    {
+      "type": "assertion",
+      "description": "The text 'Methodology' is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "The page shows the term 'Coverage'"
+    }
+  ]
+}

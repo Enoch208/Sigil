@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Landing page loads with the loop-verification hero",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'View live demo' button is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "A 'Sign in' button is visible in the top navigation"
+    }
+  ]
+}

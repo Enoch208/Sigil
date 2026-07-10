@@ -1,0 +1,19 @@
+{
+  "projectId": "3af15739-82bf-4c8c-90cf-5b843a177bcc",
+  "type": "frontend",
+  "name": "Season leaderboard ranks projects by Loop Integrity score",
+  "planSteps": [
+    {
+      "type": "action",
+      "description": "Navigate to /season"
+    },
+    {
+      "type": "assertion",
+      "description": "The heading 'Loop Integrity by project' is visible"
+    },
+    {
+      "type": "assertion",
+      "description": "The leaderboard lists the project 'loopscope/sigil'"
+    }
+  ]
+}
