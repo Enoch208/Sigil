@@ -27,7 +27,9 @@ Built for the **TestSprite Hackathon Season 3**.
 
 _~90 seconds — the real product driven live. A verified badge flips **red** the instant a loop line is tampered with; `npm run self-audit` scores our own loop **100/0-contradicted**; and the Season Index renders the whole field, fairly._
 
-> Demo video: _coming with submission_ · try it live at **[sigil-umber.vercel.app](https://sigil-umber.vercel.app)**
+<video src="https://github.com/user-attachments/assets/6300a5d8-407f-4e23-bf5b-52f8886b2608" controls style="max-width: 100%; border-radius: 8px;"></video>
+
+Try it live at **[sigil-umber.vercel.app](https://sigil-umber.vercel.app)**
 
 ---
 
