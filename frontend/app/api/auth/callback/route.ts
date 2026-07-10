@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { OAUTH_STATE_COOKIE, sessionCookie, type Session } from "@/lib/auth/session";
+import { OAUTH_STATE_COOKIE, resolveOrigin, sessionCookie, type Session } from "@/lib/auth/session";
 
 /** GitHub OAuth callback: exchange the code for a token, read the profile, sign in. */
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
-  const { origin } = url;
+  const origin = resolveOrigin(request);
   const fail = (reason: string) => NextResponse.redirect(new URL(`/signin?error=${reason}`, origin));
 
   const code = url.searchParams.get("code");

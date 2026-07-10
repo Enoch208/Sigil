@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { OAUTH_STATE_COOKIE } from "@/lib/auth/session";
+import { OAUTH_STATE_COOKIE, resolveOrigin } from "@/lib/auth/session";
 
 /**
  * Begin GitHub sign-in. If an OAuth app is configured, redirect to GitHub's
@@ -7,7 +7,7 @@ import { OAUTH_STATE_COOKIE } from "@/lib/auth/session";
  * lands the user in the product.
  */
 export async function GET(request: Request): Promise<Response> {
-  const { origin } = new URL(request.url);
+  const origin = resolveOrigin(request);
   const clientId = process.env.GITHUB_CLIENT_ID;
 
   if (!clientId) {

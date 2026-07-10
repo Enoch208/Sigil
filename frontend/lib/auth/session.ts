@@ -17,6 +17,20 @@ export const SESSION_COOKIE = "sigil_session";
 export const OAUTH_STATE_COOKIE = "sigil_oauth_state";
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
+/**
+ * Resolve the public origin behind Vercel's proxy so the OAuth `redirect_uri`
+ * exactly matches the registered callback. Prefers an explicit env override,
+ * then the forwarded host/proto headers, then the request URL.
+ */
+export function resolveOrigin(request: Request): string {
+  const envUrl = process.env.AUTH_BASE_URL;
+  if (envUrl) return envUrl.replace(/\/+$/, "");
+  const h = request.headers;
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  if (host) return `${h.get("x-forwarded-proto") ?? "https"}://${host}`;
+  return new URL(request.url).origin;
+}
+
 export function encodeSession(session: Session): string {
   return Buffer.from(JSON.stringify(session), "utf8").toString("base64url");
 }
